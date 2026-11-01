@@ -1,0 +1,14 @@
+VSVersionInfo(
+  ffi=FixedFileInfo(filevers=(1, 10, 0, 0), prodvers=(1, 10, 0, 0), mask=0x3f, flags=0x0,
+                    OS=0x40004, fileType=0x1, subtype=0x0, date=(0, 0)),
+  kids=[StringFileInfo([StringTable('080404B0', [
+    StringStruct('CompanyName', 'Codex Quota Viewer'),
+    StringStruct('FileDescription', 'Codex 额度查看器启动联动'),
+    StringStruct('FileVersion', '1.10.0.0'),
+    StringStruct('InternalName', 'CodexQuotaFollower'),
+    StringStruct('OriginalFilename', 'Codex额度联动.exe'),
+    StringStruct('ProductName', 'Codex 额度查看器'),
+    StringStruct('ProductVersion', '1.10.0.0'),
+    StringStruct('LegalCopyright', 'MIT License')])]),
+    VarFileInfo([VarStruct('Translation', [2052, 1200])])]
+)

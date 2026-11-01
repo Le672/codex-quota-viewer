@@ -1,0 +1,48 @@
+name: Codex quota viewer Windows release
+
+on:
+  push:
+    tags: ['quota-v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: codex-quota-viewer
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install build dependencies
+        run: python -m pip install -r requirements.txt 'pyinstaller>=6.16,<7'
+      - name: Verify offline behavior
+        run: |
+          python tools/verify_backend.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build Windows executables
+        run: |
+          python -m PyInstaller --noconfirm CodexQuotaViewer.spec
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python tools/package_release.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CodexQuotaViewer-windows-x64
+          path: codex-quota-viewer/.release/*
+      - name: Publish GitHub release
+        if: startsWith(github.ref, 'refs/tags/quota-v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          gh release create $env:RELEASE_TAG .release/* --title 'Codex 额度查看器 v1.10.0' --notes-file RELEASE_NOTES.md
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

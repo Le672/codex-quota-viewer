@@ -1,0 +1,17 @@
+# 构建产物
+build/
+dist/
+*.spec.bak
+__pycache__/
+*.pyc
+*.pyo
+
+# 本地运行数据与环境
+.build-venv/
+.release/
+*.log
+*validation.json
+*snapshot.json
+.pytest_cache/
+# 图标作为发行资源提交
+.pytest_cache/

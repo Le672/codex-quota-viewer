@@ -13,7 +13,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: codex-quota-viewer
+        working-directory: .
         shell: pwsh
     steps:
       - uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: CodexQuotaViewer-windows-x64
-          path: codex-quota-viewer/.release/*
+          path: .release/*
       - name: Publish GitHub release
         if: startsWith(github.ref, 'refs/tags/quota-v')
         env:
